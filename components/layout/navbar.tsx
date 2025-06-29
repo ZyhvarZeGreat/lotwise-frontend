@@ -85,7 +85,7 @@ export function Navbar() {
                 />
               </svg>
             </div>
-            <span className="font-bricolage font-bold text-xl">Lotwise V2</span>
+            <span className="font-bricolage font-bold text-xl">Lotwise</span>
           </Link>
 
           {/* Desktop Navigation */}

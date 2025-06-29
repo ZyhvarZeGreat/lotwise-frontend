@@ -291,7 +291,7 @@ export default function DocsPage() {
           <div>
             <h1 className="font-bricolage text-3xl font-bold mb-4">Documentation</h1>
             <p className="text-muted-foreground text-lg">
-              Learn how to use Lotwise V2 and integrate with our platform.
+              Learn how to use Lotwise and integrate with our platform.
             </p>
           </div>
           <ThemeToggle />

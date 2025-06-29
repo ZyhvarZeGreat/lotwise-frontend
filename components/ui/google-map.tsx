@@ -7,9 +7,16 @@ import { Card, CardContent } from "@/components/ui/card"
 import type { google } from "google-maps"
 
 interface GoogleMapProps {
-  address: string
-  propertyName: string
+  address?: string
+  propertyName?: string
   className?: string
+  center?: MapLocation
+  zoom?: number
+  markers?: Array<{
+    position: MapLocation
+    title: string
+    address: string
+  }>
 }
 
 interface MapLocation {
@@ -39,7 +46,7 @@ const geocodeAddress = async (address: string): Promise<MapLocation> => {
   return mockLocations[city]
 }
 
-export function GoogleMap({ address, propertyName, className }: GoogleMapProps) {
+export function GoogleMap({ address, propertyName, className, center, zoom = 15, markers }: GoogleMapProps) {
   const mapRef = useRef<HTMLDivElement>(null)
   const [map, setMap] = useState<google.maps.Map | null>(null)
   const [loading, setLoading] = useState(true)
@@ -52,15 +59,22 @@ export function GoogleMap({ address, propertyName, className }: GoogleMapProps) 
         setLoading(true)
         setError(null)
 
-        // Get coordinates for the address
-        const coords = await geocodeAddress(address)
+        // Get coordinates - use provided center or geocode address
+        let coords: MapLocation
+        if (center) {
+          coords = center
+        } else if (address) {
+          coords = await geocodeAddress(address)
+        } else {
+          throw new Error("Either center coordinates or address must be provided")
+        }
         setLocation(coords)
 
         // Initialize Google Maps
         if (mapRef.current && window.google) {
           const mapInstance = new window.google.maps.Map(mapRef.current, {
             center: coords,
-            zoom: 15,
+            zoom: zoom,
             styles: [
               {
                 featureType: "all",
@@ -89,37 +103,41 @@ export function GoogleMap({ address, propertyName, className }: GoogleMapProps) 
             zoomControl: true,
           })
 
-          // Add marker
-          const marker = new window.google.maps.Marker({
-            position: coords,
-            map: mapInstance,
-            title: propertyName,
-            icon: {
-              url:
-                "data:image/svg+xml;charset=UTF-8," +
-                encodeURIComponent(`
-                <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <circle cx="16" cy="16" r="12" fill="#0ea5e9" stroke="white" strokeWidth="3"/>
-                  <path d="M16 8L20 14H12L16 8Z" fill="white"/>
-                  <circle cx="16" cy="18" r="2" fill="white"/>
-                </svg>
-              `),
-              scaledSize: new window.google.maps.Size(32, 32),
-            },
-          })
+          // Add markers
+          const markersToCreate = markers || (propertyName && address ? [{ position: coords, title: propertyName, address }] : [])
+          
+          markersToCreate.forEach((markerData) => {
+            const marker = new window.google.maps.Marker({
+              position: markerData.position,
+              map: mapInstance,
+              title: markerData.title,
+              icon: {
+                url:
+                  "data:image/svg+xml;charset=UTF-8," +
+                  encodeURIComponent(`
+                  <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <circle cx="16" cy="16" r="12" fill="#0ea5e9" stroke="white" strokeWidth="3"/>
+                    <path d="M16 8L20 14H12L16 8Z" fill="white"/>
+                    <circle cx="16" cy="18" r="2" fill="white"/>
+                  </svg>
+                `),
+                scaledSize: new window.google.maps.Size(32, 32),
+              },
+            })
 
-          // Add info window
-          const infoWindow = new window.google.maps.InfoWindow({
-            content: `
-              <div style="padding: 8px; font-family: system-ui, sans-serif;">
-                <h3 style="margin: 0 0 4px 0; font-size: 14px; font-weight: 600;">${propertyName}</h3>
-                <p style="margin: 0; font-size: 12px; color: #666;">${address}</p>
-              </div>
-            `,
-          })
+            // Add info window
+            const infoWindow = new window.google.maps.InfoWindow({
+              content: `
+                <div style="padding: 8px; font-family: system-ui, sans-serif;">
+                  <h3 style="margin: 0 0 4px 0; font-size: 14px; font-weight: 600;">${markerData.title}</h3>
+                  <p style="margin: 0; font-size: 12px; color: #666;">${markerData.address}</p>
+                </div>
+              `,
+            })
 
-          marker.addListener("click", () => {
-            infoWindow.open(mapInstance, marker)
+            marker.addListener("click", () => {
+              infoWindow.open(mapInstance, marker)
+            })
           })
 
           setMap(mapInstance)

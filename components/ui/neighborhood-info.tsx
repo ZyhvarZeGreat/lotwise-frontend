@@ -5,7 +5,8 @@ import { Badge } from "@/components/ui/badge"
 import { Star, MapPin, Car, ShoppingBag, GraduationCap, Hospital, Coffee } from "lucide-react"
 
 interface NeighborhoodInfoProps {
-  address: string
+  address?: string
+  location?: string
 }
 
 // Mock neighborhood data
@@ -39,8 +40,8 @@ const getNeighborhoodInfo = (address: string) => {
   return mockData
 }
 
-export function NeighborhoodInfo({ address }: NeighborhoodInfoProps) {
-  const info = getNeighborhoodInfo(address)
+export function NeighborhoodInfo({ address, location }: NeighborhoodInfoProps) {
+  const info = getNeighborhoodInfo(address || location || "")
 
   const getScoreColor = (score: number) => {
     if (score >= 80) return "text-green-600"

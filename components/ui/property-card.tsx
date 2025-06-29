@@ -15,6 +15,7 @@ interface PropertyCardProps {
   currentYield: number
   status?: "active" | "sold" | "pending"
   onViewListing?: (id: string) => void
+  onPurchase?: () => void
 }
 
 export function PropertyCard({
@@ -27,6 +28,7 @@ export function PropertyCard({
   currentYield,
   status = "active",
   onViewListing,
+  onPurchase,
 }: PropertyCardProps) {
   return (
     <Card className="overflow-hidden hover:shadow-lg transition-shadow animate-fade-in">
@@ -64,9 +66,16 @@ export function PropertyCard({
             </div>
           </div>
 
-          <Button className="w-full" onClick={() => onViewListing?.(id)} disabled={status === "sold"}>
-            {status === "sold" ? "Sold Out" : "View Listing"}
-          </Button>
+          <div className="space-y-2">
+            <Button className="w-full" onClick={() => onViewListing?.(id)} disabled={status === "sold"}>
+              {status === "sold" ? "Sold Out" : "View Listing"}
+            </Button>
+            {onPurchase && status === "active" && (
+              <Button variant="outline" className="w-full" onClick={onPurchase}>
+                Quick Purchase
+              </Button>
+            )}
+          </div>
         </div>
       </CardContent>
     </Card>

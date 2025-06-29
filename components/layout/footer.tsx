@@ -52,7 +52,7 @@ export function Footer() {
             <div className="h-8 w-8 rounded-lg bg-primary flex items-center justify-center">
               <span className="text-primary-foreground font-bold text-sm">L</span>
             </div>
-            <span className="font-bricolage font-bold text-xl">Lotwise V2</span>
+            <span className="font-bricolage font-bold text-xl">Lotwise</span>
           </div>
 
           <p className="text-muted-foreground text-sm">© 2024 Lotwise. All rights reserved.</p>

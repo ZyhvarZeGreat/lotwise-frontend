@@ -11,13 +11,13 @@ interface Props {
 
 export default function ClientLayout({ children }: Props) {
   const pathname = usePathname()
-  const showFooter = pathname === "/"
+  const isHomePage = pathname === "/"
 
   return (
     <div className="min-h-screen bg-background">
-      <Navbar />
+      {!isHomePage && <Navbar />}
       <main>{children}</main>
-      {showFooter && <Footer />}
+      <Footer />
     </div>
   )
 }

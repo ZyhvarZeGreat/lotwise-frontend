@@ -9,11 +9,12 @@ interface StatCardProps {
   change?: string
   changeType?: "positive" | "negative" | "neutral"
   className?: string
+  style?: React.CSSProperties
 }
 
-export function StatCard({ title, value, change, changeType = "neutral", className }: StatCardProps) {
+export function StatCard({ title, value, change, changeType = "neutral", className, style }: StatCardProps) {
   return (
-    <Card className={cn("animate-fade-in", className)}>
+    <Card className={cn("animate-fade-in", className)} style={style}>
       <CardContent className="p-6">
         <div className="space-y-2">
           <p className="text-sm font-medium text-muted-foreground">{title}</p>

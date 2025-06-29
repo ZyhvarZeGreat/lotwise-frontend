@@ -93,7 +93,7 @@ export default function LandingPage() {
                 />
               </svg>
             </div>
-            <span className="font-bricolage font-bold text-xl">Lotwise V2</span>
+            <span className="font-bricolage font-bold text-xl">Lotwise</span>
           </div>
 
           {/* Navigation */}
@@ -151,7 +151,7 @@ export default function LandingPage() {
                   The Future of <span className="text-primary">Real Estate</span> Investment
                 </h1>
                 <p className="text-xl text-muted-foreground max-w-2xl">
-                  Lotwise V2 tokenizes real estate into 1,000 ERC-721 tokens per property, enabling fractional
+                  Lotwise tokenizes real estate into 1,000 ERC-721 tokens per property, enabling fractional
                   ownership. Integrate with Aave to earn yield, trade instantly, and access global real estate markets.
                 </p>
               </div>
@@ -236,7 +236,7 @@ export default function LandingPage() {
       <section id="features" className="py-20">
         <div className="container px-4">
           <div className="max-w-2xl mx-auto text-center mb-16">
-            <h2 className="font-bricolage text-3xl md:text-4xl font-bold mb-4">Why Choose Lotwise V2?</h2>
+            <h2 className="font-bricolage text-3xl md:text-4xl font-bold mb-4">Why Choose Lotwise?</h2>
             <p className="text-muted-foreground text-lg">
               Built with cutting-edge blockchain technology and integrated with leading DeFi protocols
             </p>
@@ -408,7 +408,7 @@ export default function LandingPage() {
                     />
                   </svg>
                 </div>
-                <span className="font-bricolage font-bold text-xl">Lotwise V2</span>
+                <span className="font-bricolage font-bold text-xl">Lotwise</span>
               </div>
               <p className="text-muted-foreground text-sm">
                 The future of real estate investment through blockchain technology.
@@ -491,7 +491,7 @@ export default function LandingPage() {
             </div>
           </div>
           <div className="border-t mt-8 pt-8 text-center text-sm text-muted-foreground">
-            <p>&copy; 2024 Lotwise V2. All rights reserved.</p>
+            <p>&copy; 2024 Lotwise. All rights reserved.</p>
           </div>
         </div>
       </footer>
